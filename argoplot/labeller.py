@@ -15,7 +15,7 @@ var_dict = dict(
     PAR='PAR',
 )
 unit_dict = dict(
-    TEMP='{}C}'.format(chr(176)),
+    TEMP='{}C'.format(chr(176)),
     PSAL='',
     PRES='dbar',
     DOXY='$\mathregular{\mu}$mol kg$^{{-1}}$',
@@ -49,7 +49,7 @@ def assign_label(name):
 def contour_label_at_edge(levels, cs, ax, fmt, side='both', pad=0.005, **kwargs):
     '''
     Label contour lines at the edge of plot
-    
+
     Args:
         levels (1d array): contour levels.
         cs (QuadContourSet obj): the return value of contour() function.

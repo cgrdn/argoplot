@@ -57,10 +57,6 @@ def trajectory(data, hue=None, style=None, ax=None, markers=True, projection=def
     ax.set_xlabel('')
     ax.set_ylabel('')
     ax.set_extent(extent)
-    ax.coastlines(resolution='10m')
-    ax.add_feature(cfeature.LAND.with_scale('10m'))
-    ax.add_feature(cfeature.BORDERS.with_scale('10m'))
-    ax.add_feature(cfeature.RIVERS.with_scale('10m'))
-    ax.add_feature(cfeature.LAKES.with_scale('10m'))
+    ax.add_feature(cfeature.GSHHSFeature('auto', edgecolor='black', facecolor='lightgray'))
 
     return sg
