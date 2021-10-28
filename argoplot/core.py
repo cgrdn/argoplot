@@ -1,6 +1,5 @@
 
 import matplotlib.pyplot as plt
-import seaborn as sns
 
 from .plot import PltClass
 from . import plot
@@ -30,11 +29,11 @@ def summary(df, traj, axes=None, projection=geo.default_projection, temp_prop={}
         g = PltClass(plt.gcf(), axes)
     
     # first plot, temperature
-    plot.profile(x='TEMP', y='PRES', hue='float', data=df, legend=True, ax=g.axes[0], **temp_prop)
+    plot.profile(x='TEMP', y='PRES', hue='file', data=df, legend=True, ax=g.axes[0], **temp_prop)
     # second plot, salinity
-    plot.profile(x='PSAL', y='PRES', hue='float', data=df, ax=g.axes[1], **psal_prop)
+    plot.profile(x='PSAL', y='PRES', hue='file', data=df, ax=g.axes[1], ax_prop=dict(yticklabels=[], ylabel=''),  **psal_prop)
     # third plot, TS diagram
-    plot.ts_diagram(df, xticks='top', yticks='right', contour_labels='lowerleft', ax=g.axes[2], **ts_prop)
+    plot.ts_diagram(df, hue='file', xticks='top', yticks='right', contour_labels='lowerleft', ax=g.axes[2], **ts_prop)
     ticker.arrange(g.axes[2], 'upperright')
     # fourth plot, float map
     geo.trajectory(traj, ax=g.axes[3], **map_prop)

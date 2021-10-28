@@ -73,7 +73,7 @@ def contour_label_at_edge(levels, cs, ax, fmt, side='both', pad=0.005, **kwargs)
     bbox = Bbox.from_bounds(xlim[0], ylim[0], xlim[1]-xlim[0], ylim[1]-ylim[0])
     eps = 1e-5  # error for checking boundary intersection
     # -----------Loop through contour levels-----------
-    for col, l in enumerate(collections, levels):
+    for col, l in zip(collections, levels):
         paths = col.get_paths()  # the Paths for these contours
         if len(paths) == 0:
             continue

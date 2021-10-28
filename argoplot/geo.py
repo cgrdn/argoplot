@@ -20,7 +20,8 @@ def add_subplot(fig, loc, projection=default_projection):
     add subplot to a figure with a given projection
     '''
     
-    fig.add_subplot(loc, projection=projection)
+    ax = fig.add_subplot(loc, projection=projection)
+    return ax
 
 def trajectory(data, hue=None, style=None, ax=None, markers=True, projection=default_projection, **kwargs):
     '''

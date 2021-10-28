@@ -17,7 +17,7 @@ class PltClass:
     def __init__(self, fig, axes):
         self.info = 'argoplot object'
         self.fig  = fig
-        if axes is mpl.axes._subplots.AxesSubplot or axes is mpl.axes._axes.Axes:
+        if axes is mpl.axes._subplots.Subplot or axes is mpl.axes._axes.Axes:
             self.ax = axes
             self.axes = [axes]
         else:
@@ -106,13 +106,17 @@ def ts_diagram(data, lat=45, lon=90, hue=None, style=None, legend=False, ax=None
 
     pden = gsw.pot_rho_t_exact(gsw.SA_from_SP(vs, 0, lon, lat), vt, 0, 0) - 1000
     # contour levels
-    levels = list(range(np.floor(np.min(pden)), np.ceil(np.max(pden)), 2))
+    levels = list(range(int(np.floor(np.min(pden))), int(np.ceil(np.max(pden)))+2, 2))
 
     # TS diagram w/ pot density contours 
     cs = ax.contour(vs, vt, pden, colors='black', levels=levels, zorder=1)
-    labeller.label_at_edge(levels, cs, ax, '%d', side='lowerleft', pad=0.1)
-    sg = sns.scatterplot(x='PSAL', y='TEMP', hue=hue, style=style, data=data, legend=legend, ax=ax, zorder=2, **kwargs)
+    labeller.contour_label_at_edge(levels, cs, ax, '%d', side='lowerleft', pad=0.1)
+    sg = sns.scatterplot(x='PSAL', y='TEMP', hue=hue, style=style, data=data, legend=legend, ax=ax, zorder=2)
     sg.cs = cs
+
+    for yl in ax.get_yticklabels():
+        yl.update(dict(rotation=90))
+        yl.set_verticalalignment('center')
 
     ax.set_xlabel(labeller.assign_label('PSAL'))
     ax.set_ylabel(labeller.assign_label('TEMP'))

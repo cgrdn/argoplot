@@ -32,9 +32,54 @@ def arrange(ax, loc):
         ax.xaxis.tick_top()
         ax.xaxis.set_label_position('top')
         
-def geo_extent_squate(data):
+def extent_factor(c, i):
+    '''
+    widen extent depending on coordinate sign and location in extent list
+    '''
+
+    if i % 2 == 0:
+        if c > 0:
+            f = 0.9
+        else:
+            f = 1.1
+    else:
+        if c > 0:
+            f = 1.1
+        else:
+            f = 0.9
+
+    return f
+
+def geo_extent(data):
     '''
     create a cartopy extent that will create a square plot shape
     '''
 
-    return
+    # extent of the data
+    data_extent = [
+        data.longitude.min(),
+        data.longitude.max(),
+        data.latitude.min(),
+        data.latitude.max(),
+    ]
+
+    # extent to fit the data
+    fit_extent = [extent_factor(c, i)*c for i, c in enumerate(data_extent)]
+
+    # get the longer extent
+    lon_range = fit_extent[1] - fit_extent[0]
+    lat_range = fit_extent[3] - fit_extent[2]
+    max_range = np.max([lon_range, lat_range])
+
+    lon_mean = np.mean(fit_extent[:2])
+    lat_mean = np.mean(fit_extent[2:])
+
+    # set square extent
+    extent = [
+        lon_mean - max_range/2,
+        lon_mean + max_range/2,
+        lat_mean - max_range/2,
+        lat_mean + max_range/2,
+    ]
+
+    return extent
